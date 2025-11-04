@@ -1,4 +1,4 @@
-package com.example.f1challenge.ui.theme
+package com.example.f1challenge.ui.themes
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

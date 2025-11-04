@@ -1,4 +1,4 @@
-package com.example.f1challenge.ui.theme
+package com.example.f1challenge.ui.themes
 
 import androidx.compose.ui.graphics.Color
 
