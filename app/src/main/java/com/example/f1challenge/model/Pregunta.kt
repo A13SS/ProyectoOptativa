@@ -1,4 +1,4 @@
-package com.example.f1challenge.models
+package com.example.f1challenge.model
 
 data class Pregunta(
     var pid : String = "",
