@@ -154,8 +154,8 @@ fun LoginScreen(
                 }
                 Spacer(modifier = Modifier.height(8.dp))
 
-                //Enlace de "¿Olvidaste tu contraseña?"
-                TextButton(onClick = { /* TODO: Implementar lógica de recuperación */ }) {
+                //Enlace de "¿Olvidaste tu contraseña?". ESTA VACIO, SE IMPLEMENTARA PROXIMAMENTE, LO HE PUESTO A MODO VISUAL DE MOMENTO YA QUE TODA APLICACION LO POSEE
+                TextButton(onClick = { }) {
                     Text(
                         text = "¿Olvidaste tu contraseña?",
                         color = Color.Gray,
