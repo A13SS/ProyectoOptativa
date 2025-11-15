@@ -5,7 +5,7 @@
 Aplicación Android desarrollada con **Jetpack Compose** y **Firebase** que permite:
 - Iniciar sesión con correo y contraseña.
 - Registrarse y guardar datos del usuario (nombre, teléfono, email y contraseña) en la Realtime Database.
-- Mostrar un home con la información del usuario autenticado, en este caso se pide el gmail.
+- Mostrar un home con la información del usuario autenticado, en este caso se pide el email.
 - Cerrar sesión y volver a la pantalla de login.
 
 ## Pasos para la prueba de la aplicación
