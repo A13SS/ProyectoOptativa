@@ -15,7 +15,7 @@ fun F1ChallengeApp(
 ) {
     val context = LocalContext.current
 
-    //Inicializar Firebase una sola vez
+    //Inicializa Firebase una sola vez
     LaunchedEffect(Unit) {
         if (FirebaseApp.getApps(context).isEmpty()) {
             FirebaseApp.initializeApp(context)

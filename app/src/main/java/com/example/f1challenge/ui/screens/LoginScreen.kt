@@ -19,18 +19,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import com.example.f1challenge.R
-import com.example.f1challenge.model.User
 import com.example.f1challenge.ui.themes.F1Background
-import com.example.f1challenge.ui.themes.F1ChallengeTheme
 import com.example.f1challenge.ui.themes.F1Red
 import com.example.f1challenge.viewmodel.AuthViewModel
-import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.flow.MutableStateFlow
+
 
 //Estoy usando APIS de Material3 que son experimentales, y alguans funciones internas pueden serlo aunq los componenetes quen use ya no lo sean
 @OptIn(ExperimentalMaterial3Api::class)
@@ -179,7 +174,7 @@ fun LoginScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "¿No tienes una cuenta? ",
+                    text = "¿No tienes una cuenta?",
                     color = Color.Gray
                 )
                 Text(

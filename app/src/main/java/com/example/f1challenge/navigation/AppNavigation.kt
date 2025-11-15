@@ -1,7 +1,6 @@
 package com.example.f1challenge.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
@@ -12,7 +11,7 @@ import com.example.f1challenge.ui.screens.LoginScreen
 import com.example.f1challenge.ui.screens.RegisterScreen
 import com.example.f1challenge.viewmodel.AuthViewModel
 
-// Define las rutas de forma segura
+//Define las rutas de forma segura
 sealed class Screen(val route: String) {
     object Login : Screen("login_screen")
     object Register : Screen("register_screen")
@@ -21,7 +20,7 @@ sealed class Screen(val route: String) {
 
 @Composable
 fun AppNavigation(navController: NavHostController, authViewModel: AuthViewModel) {
-    // Observa el estado de autenticación
+    //Observa el estado de autenticación
     val currentUser by authViewModel.currentUser.collectAsState(initial = null)
 
     NavHost(

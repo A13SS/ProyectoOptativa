@@ -1,5 +1,4 @@
 package com.example.f1challenge.model
-
 data class User(
     var uid : String = "",
     var nombre : String = "",

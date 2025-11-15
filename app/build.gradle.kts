@@ -57,10 +57,10 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
 
-    // Navegación para Compose
+    //Navegación para Compose
     implementation(libs.androidx.navigation.compose)
 
-    // ViewModel para Compose
+    //ViewModel para Compose
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     implementation("androidx.compose.material:material-icons-extended:1.6.0")
@@ -77,7 +77,7 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
     implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-auth-ktx") // Autenticación
-    implementation("com.google.firebase:firebase-database-ktx") // Base de datos en tiempo real
+    implementation("com.google.firebase:firebase-auth-ktx") //Autenticación
+    implementation("com.google.firebase:firebase-database-ktx") //Base de datos en tiempo real
 
 }

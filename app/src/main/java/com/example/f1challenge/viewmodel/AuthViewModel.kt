@@ -29,7 +29,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     val userData: StateFlow<User?> = _userData
 
     init {
-        // Escucha los cambios en el estado de autenticación
+        //Escucha los cambios en el estado de autenticación
         auth.addAuthStateListener { firebaseAuth ->
             _currentUser.value = firebaseAuth.currentUser
             if (firebaseAuth.currentUser != null) {
@@ -64,7 +64,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
             val authResult = auth.createUserWithEmailAndPassword(email, password).await()
             val uid = authResult.user?.uid ?: return@launch
 
-            //Crear objeto de usuario para la BD (sin contraseña)
+            //Crea el objeto de usuario para la BD (sin contraseña)
             val user = User(
                 uid = uid,
                 nombre = nombre,
@@ -74,7 +74,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
                 puntos = 0
             )
 
-            //Guardar en Realtime Database
+            //Guarda en Realtime Database
             database.child("users").child(uid).setValue(user).await()
         } catch (e: Exception) {
             _errorMessage.value = e.message  //Mostrará el error real
