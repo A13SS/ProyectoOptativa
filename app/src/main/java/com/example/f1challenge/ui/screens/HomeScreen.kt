@@ -16,7 +16,6 @@ fun HomeScreen(
     authViewModel: AuthViewModel
 ) {
     val user by authViewModel.currentUser.collectAsState()
-    val userData by authViewModel.userData.collectAsState()
 
     LaunchedEffect(user) {
         if (user == null) {
