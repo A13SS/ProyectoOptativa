@@ -17,7 +17,7 @@ import kotlinx.coroutines.tasks.await
 
 class AuthViewModel(application: Application) : AndroidViewModel(application) {
     private val auth: FirebaseAuth = Firebase.auth
-    private val database: DatabaseReference = Firebase.database.reference
+    private val database: DatabaseReference = Firebase.database("https://f1challenge-4fb78-default-rtdb.europe-west1.firebasedatabase.app/").reference
 
     private val _currentUser = MutableStateFlow<FirebaseUser?>(null)
     val currentUser: StateFlow<FirebaseUser?> = _currentUser
@@ -66,16 +66,16 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
             //Crea el objeto de usuario para la BD (sin contraseña)
             val user = User(
-                uid = uid,
                 nombre = nombre,
                 email = email,
                 telefono = telefono,
                 contasenia = password,  //MIRAR PORSI PREGUNTAR A LA PROFE PARA GUARDAR O NO LA CONTRASEÑA DIRECTAMENTE
-                puntos = 0
+                puntos = 0,
+                rol = 2
             )
 
             //Guarda en Realtime Database
-            database.child("users").child(uid).setValue(user).await()
+            database.child("user").child(uid).setValue(user).await()
         } catch (e: Exception) {
             _errorMessage.value = e.message  //Mostrará el error real
         }
@@ -91,7 +91,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun fetchUserData(uid: String) = viewModelScope.launch {
         try {
-            val snapshot = database.child("users").child(uid).get().await()
+            val snapshot = database.child("user").child(uid).get().await()
             val user = snapshot.getValue(User::class.java)
             _userData.value = user
         } catch (e: Exception) {
