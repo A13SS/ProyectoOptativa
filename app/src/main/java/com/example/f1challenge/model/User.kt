@@ -5,5 +5,5 @@ data class User(
     var telefono : String = "",
     val contasenia : String = "",
     val puntos : Int = 0,
-    val rol : Int
+    val rol : Int = 2
 )
