@@ -12,6 +12,7 @@ import com.example.f1challenge.viewmodel.AuthViewModel
 
 @Composable
 fun HomeScreen(
+    onNavigateToEventList: () -> Unit,
     onLogoutSuccess: () -> Unit,
     authViewModel: AuthViewModel
 ) {
@@ -34,6 +35,16 @@ fun HomeScreen(
             user?.let { authUser ->
                 Text("Email: ${authUser.email}", fontSize = 18.sp)
             }
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        //Botón para ir a la lista de eventos
+        Button(
+            onClick = { onNavigateToEventList() },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Ver Eventos")
+        }
 
 
         Spacer(modifier = Modifier.height(32.dp))

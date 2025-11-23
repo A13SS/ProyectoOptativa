@@ -9,6 +9,8 @@ import androidx.navigation.compose.composable
 import com.example.f1challenge.ui.screens.HomeScreen
 import com.example.f1challenge.ui.screens.LoginScreen
 import com.example.f1challenge.ui.screens.RegisterScreen
+import com.example.f1challenge.ui.screens.EventListScreen
+import com.example.f1challenge.ui.screens.EventFormScreen
 import com.example.f1challenge.viewmodel.AuthViewModel
 
 //Define las rutas de forma segura
@@ -16,6 +18,8 @@ sealed class Screen(val route: String) {
     object Login : Screen("login_screen")
     object Register : Screen("register_screen")
     object Home : Screen("home_screen")
+    object EventList : Screen("event_list_screen")
+    object EventForm : Screen("event_form_screen")
 }
 
 @Composable
@@ -43,7 +47,35 @@ fun AppNavigation(navController: NavHostController, authViewModel: AuthViewModel
         }
         composable(Screen.Home.route) {
             HomeScreen(
+                onNavigateToEventList = { navController.navigate(Screen.EventList.route) },
                 onLogoutSuccess = { navController.navigate(Screen.Login.route) { popUpTo(0) { inclusive = true } } },
+                authViewModel = authViewModel
+            )
+        }
+        composable(Screen.EventList.route) {
+            EventListScreen(
+                onBack = { navController.popBackStack() },
+                onNavigateToEventForm = { eventId ->
+                    navController.navigate("${Screen.EventForm.route}/$eventId")
+                },
+                onNavigateToAddEvent = {
+                    navController.navigate(Screen.EventForm.route)
+                },
+                authViewModel = authViewModel
+            )
+        }
+        composable(Screen.EventForm.route + "/{eventId}") { backStackEntry ->
+            val eventId = backStackEntry.arguments?.getString("eventId") ?: ""
+            EventFormScreen(
+                eventId = eventId,
+                onBack = { navController.popBackStack() },
+                authViewModel = authViewModel
+            )
+        }
+        composable(Screen.EventForm.route) {
+            EventFormScreen(
+                eventId = "",
+                onBack = { navController.popBackStack() },
                 authViewModel = authViewModel
             )
         }

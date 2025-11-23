@@ -69,7 +69,8 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
                 nombre = nombre,
                 email = email,
                 telefono = telefono,
-                contasenia = password  //MIRAR PORSI PREGUNTAR A LA PROFE PARA GUARDAR O NO LA CONTRASEÑA DIRECTAMENTE
+                contasenia = password,  //MIRAR PORSI PREGUNTAR A LA PROFE PARA GUARDAR O NO LA CONTRASEÑA DIRECTAMENTE
+                rol = 2
             )
 
             //Guarda en Realtime Database
