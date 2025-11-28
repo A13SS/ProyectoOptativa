@@ -37,7 +37,7 @@ fun EventFormScreen(
     //Cargar si es edición
     LaunchedEffect(eventId) {
         if (eventId.isNotEmpty()) {
-            FirebaseDatabase.getInstance().getReference("elementos").child(eventId)
+            FirebaseDatabase.getInstance("https://f1challenge-4fb78-default-rtdb.europe-west1.firebasedatabase.app/").getReference("elementos").child(eventId)
                 .get()
                 .addOnSuccessListener { snapshot ->
                     val event = snapshot.getValue(Event::class.java)
@@ -99,7 +99,7 @@ fun EventFormScreen(
                         fechaCreacion = fecha
                     )
 
-                    val ref = FirebaseDatabase.getInstance().getReference("elementos")
+                    val ref = FirebaseDatabase.getInstance("https://f1challenge-4fb78-default-rtdb.europe-west1.firebasedatabase.app/").getReference("elementos")
 
                     if (eventId.isEmpty()) {
                         //Crear

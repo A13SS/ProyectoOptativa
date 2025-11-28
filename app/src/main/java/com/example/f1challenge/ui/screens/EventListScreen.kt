@@ -2,6 +2,7 @@
 
 package com.example.f1challenge.ui.screens
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,6 +12,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -33,24 +35,40 @@ fun EventListScreen(
 ) {
     val context = LocalContext.current
     val userData by authViewModel.userData.collectAsState()
-    val isAdmin = userData?.isAdministrator == true
 
-    var events by remember { mutableStateOf<List<Event>>(emptyList()) }
+    if (userData == null) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+        return
+    }
+
+    val isAdmin = userData?.isAdministrator ?: false
+
+    var events by remember { mutableStateOf<List<Pair<String, Event>>>(emptyList()) }
 
     LaunchedEffect(Unit) {
-        val elementosRef = FirebaseDatabase.getInstance().getReference("elementos")
+        val elementosRef = FirebaseDatabase.getInstance("https://f1challenge-4fb78-default-rtdb.europe-west1.firebasedatabase.app/").getReference("elementos")
         elementosRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val eventList = snapshot.children.mapNotNull { childSnapshot ->
-                    childSnapshot.getValue(Event::class.java)?.apply {
-                        id = childSnapshot.key.orEmpty()
+                try {
+                    val eventList = snapshot.children.mapNotNull { childSnapshot ->
+                        val event = childSnapshot.getValue(Event::class.java)
+                        val id = childSnapshot.key
+                        if (event != null && id != null) {
+                            id to event  // Esto crea un Pair(id, event)
+                        } else {
+                            null
+                        }
                     }
+                    events = eventList
+                } catch (e: Exception) {
+                    Log.e("EventListScreen", "Error al parsear eventos", e)
                 }
-                events = eventList
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, "Error al cargar elementos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -100,10 +118,10 @@ fun EventListScreen(
                 )
             } else {
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(events) { event ->
+                    items(events) { (eventId, event) ->
                         Card(
                             modifier = Modifier.fillMaxWidth(),
-                            onClick = { if (isAdmin) onNavigateToEventForm(event.id) }
+                            onClick = { if (isAdmin) onNavigateToEventForm(eventId) }
                         ) {
                             Column(modifier = Modifier.padding(16.dp)) {
                                 Text(
@@ -123,14 +141,17 @@ fun EventListScreen(
                                         modifier = Modifier.fillMaxWidth()
                                     ) {
                                         Button(
-                                            onClick = { onNavigateToEventForm(event.id) },
+                                            onClick = { onNavigateToEventForm(eventId) },
                                             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
                                         ) {
                                             Text("Editar")
                                         }
                                         Button(
                                             onClick = {
-                                                val ref = FirebaseDatabase.getInstance().getReference("elementos").child(event.id)
+                                                val ref = FirebaseDatabase
+                                                    .getInstance("https://f1challenge-4fb78-default-rtdb.europe-west1.firebasedatabase.app/")
+                                                    .getReference("elementos")
+                                                    .child(eventId)  // ← Aquí usas el ID del nodo
                                                 ref.removeValue()
                                                     .addOnSuccessListener {
                                                         Toast.makeText(context, "Evento eliminado", Toast.LENGTH_SHORT).show()
